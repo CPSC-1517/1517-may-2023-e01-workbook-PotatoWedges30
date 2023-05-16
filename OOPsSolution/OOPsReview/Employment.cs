@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -141,7 +142,83 @@ namespace OOPsReview
         public DateTime StartDate { get; private set; }
 
 
+        /** 
+         * Constructors
+         * 
+         * the purpose of a constructor is to create an instance of your class
+         *       in a known state.
+         *  
+         *  does a class definition need a constructor? No
+         *    if a class definition constructor does NOT have a constructor then the system
+         *    will create the instance and assign the system default value to data member
+         *    and/or auto implemented property
+         *    if you have no constructor the common phrase is "using a system constructor"
+         *    
+         *  IF YOU CODE A CONSTRUCTOR IN YOUR CLASS YOU ARE RESPONSIBLE FOR ANY AND ALL CONSTRUCTORS
+         *  FOR THE CLASS!!!
+         *    
+         */
 
+        /** 
+         * Two types of Constructors:
+         * 
+         * "default" constructor
+         *  greedy constructor
+         */
+
+        /** "default" constructor:
+         *     you can apply your own literal values for your data members and/or auto-implemented properties
+         *     that differ from the system default values
+         *   why? you may have data that is validated and using the system default values would cause an
+         *   exception */
+
+        public Employment()
+        {
+            // this constructor will be used on creating an instance using
+            //  Employment myInstance = new Employment();
+            // A practice that I personally use is to avoid referring my data members directly
+            //  specially if the property contains validation
+            Title = "Unknown";
+            Level = SupervisoryLevel.TeamMember;
+            StartDate = DateTime.Today;  
+            // Optinally one could set years to zero, but that is the system default
+            //  value for a numeric, therefore one does not need to assign a value
+            // UNLESS you wish to
+        }
+
+
+        /**  greedy constructor:
+         *    a greedy constructor is one that accepts a parameter list of values to 
+         *    assign to your instance data on creation of the instance 
+         *    generally your greedy constructor contains a parameter on the signature
+         *       for each data member you have in your class definition
+         */
+
+        /**  all default parameters must appear AFTER non-default parameters in your parameter list
+         * in this example, we will use Years as an default parameter
+         */
+        public Employment (string title, SupervisoryLevel level, DateTime startdate, double years = 0.0)
+        {
+            Title= title;
+            Level = level;
+            //this example is demonstrating where you can place validation for
+            // properties that have are auto-implemented
+            // validate start data must not exist in the future
+            // validation can be done in your class
+            // since the property is auto-implemented AND has a private set
+            //        validation can be done in the constructor OR a method
+            ///      that alters the property value
+            ///   IF the validation is done in the property, IT WOULD NOT be an 
+            ///   auto-implemented property BUT a fully-implemented property
+            /// .Today has a time of 00:00:00 AM
+            /// .Now has a specific time of day at execution 18:47:256 PM
+            /// by using the .Today.AddDays(1) you cover all times on specific data
+            if (startdate >= DateTime.Today.AddDays(1))
+            {
+                throw new ArgumentException($"The start date {startdate} is in the future");
+            }
+            StartDate = startdate;
+        }
 
     }
 }
