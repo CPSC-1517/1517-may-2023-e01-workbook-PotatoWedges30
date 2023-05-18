@@ -220,5 +220,39 @@ namespace OOPsReview
             StartDate = startdate;
         }
 
+        // Behvaviours (a.k.a methods)
+        // a method consists of a header (accesslevel rdt methodname ([list of parameters])
+        //   a coding block  {....}
+
+        public void SetEmploymentResponsibilityLeve(SupervisoryLevel level)
+        {
+            /** 
+             * 
+             */
+            Level = level;
+        }
+
+        public void CorrectStartDate(DateTime startdate)
+        {
+            /** 
+             * 
+             */
+            if (startdate >= DateTime.Today.AddDays(1))
+            {
+                throw new ArgumentException($"The start date {startdate} is in the future");
+            }
+            StartDate = startdate;
+        }
+
+        public void UpdateCurrentEmploymentYearsExperince()
+        {
+            TimeSpan span = DateTime.Now - StartDate;
+            Years = Math.Round((span.Days / 365.25), 1);
+        }
+
+        public override string ToString()
+        {
+            return $"{Title}, {Level}, {StartDate.ToString("MMM dd, yyyy")}, {Years}";
+        }
     }
-}
+} 
