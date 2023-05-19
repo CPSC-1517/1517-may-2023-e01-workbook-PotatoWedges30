@@ -226,7 +226,15 @@ namespace OOPsReview
 
         public void SetEmploymentResponsibilityLeve(SupervisoryLevel level)
         {
-            /** 
+            /** The property has a private set
+             *  therefore the only way to assign a value to the property
+             *       is either: by/via the constructor are creation time
+             *            or: by/via a public method within the class
+             *            
+             *  what about validation the value?
+             *  validation can be done in multiple places
+             *     a) can it be done in this method: Yes
+             *     b) can it be done in the property: Yes if property fully implement
              * 
              */
             Level = level;
@@ -235,7 +243,10 @@ namespace OOPsReview
         public void CorrectStartDate(DateTime startdate)
         {
             /** 
-             * 
+             *  the StartDate property is an auto implemented property
+             *  The StartDate property has NO validation code
+             *  You need to do any validation on the incoming value
+             *    wherever you plan to alter the existing value in the class
              */
             if (startdate >= DateTime.Today.AddDays(1))
             {
