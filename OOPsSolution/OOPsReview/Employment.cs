@@ -118,7 +118,7 @@ namespace OOPsReview
                // if (value < 0 ) // using a Utilities generic method to do this test
                if(!Utilities.IsZeroOrPositive(value))
                 { 
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(value.ToString());
                 }
                 _Years = value;
             }
@@ -218,12 +218,22 @@ namespace OOPsReview
                 throw new ArgumentException($"The start date {startdate} is in the future");
             }
             StartDate = startdate;
+
+            if (years > 0.0)
+            {
+                Years = (double)years;
+            } else
+            {
+                TimeSpan span = DateTime.Now - StartDate;
+                Years = Math.Round((span.Days / 365.25), 1);
+            }
         }
 
         // Behvaviours (a.k.a methods)
         // a method consists of a header (accesslevel rdt methodname ([list of parameters])
         //   a coding block  {....}
 
+        
         public void SetEmploymentResponsibilityLeve(SupervisoryLevel level)
         {
             /** The property has a private set
@@ -255,15 +265,17 @@ namespace OOPsReview
             StartDate = startdate;
         }
 
-        public void UpdateCurrentEmploymentYearsExperince()
+        
+        public double UpdateCurrentEmploymentYearsExperience()
         {
             TimeSpan span = DateTime.Now - StartDate;
             Years = Math.Round((span.Days / 365.25), 1);
+            return Years;
         }
 
         public override string ToString()
         {
-            return $"{Title}, {Level}, {StartDate.ToString("MMM dd, yyyy")}, {Years}";
+            return $"{Title},{Level},{StartDate.ToString("MMM dd, yyyy")},{Years}";
         }
     }
 } 
