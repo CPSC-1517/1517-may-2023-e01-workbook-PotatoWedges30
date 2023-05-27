@@ -18,6 +18,17 @@ namespace OOPsReview
 
         public Person(string firstname,string lastname, Residence address, List<Employment> employmentPositions)
         {
+            if(string.IsNullOrWhiteSpace(firstname))
+            {
+              //  throw new ArgumentNullException(nameof(firstname),"First name is requried");
+              //                              or
+                throw new ArgumentNullException( "First name is requried");
+            }
+
+            if (string.IsNullOrWhiteSpace(lastname))
+            {
+                throw new ArgumentNullException( "Last name is requried");
+            }
             FirstName = firstname;
             LastName = lastname;
             Address = address;
@@ -36,6 +47,10 @@ namespace OOPsReview
         public Person()
         {
             //EmploymentPositions = new List<Employment>(); // create an empty instance of the list
+
+
+            FirstName = "unknown";
+            LastName = "unknown";
         }
     }
 }
