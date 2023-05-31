@@ -120,27 +120,54 @@ namespace TDDUintTestDemo
 
           }
 
+        // changing the firstname via the FirstName property
+        // validation: firstname is required.
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("    ")]
 
-          //[Theory]
-          //[InlineData(null)]
-          //[InlineData("")]
-          //[InlineData("    ")]
+        public void Throw_Expection_When_Setting_FirstName_To_Missing_Data(string changename)
+        {
+            //Arrange (Setup)
+            string firstname = "fardosa";
+            string lastname = "kito";
+            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+            Person me = new Person(firstname, lastname, address, null);
           
-          //public void Throw_Expection_When_Setting_FirstName_To_Missing_Data(string firstname)
-          //{
-          //    //Arrange (Setup)
-          //    string lastname = "kito";
-          //    Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
-          //    string expectedaddress = "123,Maple St.,Edmonton,AB,T6Y7U8";
-          //    Person me = new Person("unknown", lastname, address, null);
-          //    string expectedfirstname = "unknown";
 
-          //    //Act (execution) (sut : subject under test)
-          //    Action action = () => new Person(firstname, lastname, address, null);
+            //Act (execution) (testing will the property capture an invalid name change)
+            Action action = () => me.FirstName = changename;
 
-          //    //Assert (Testing of the action)
-          //    action.Should().Throw<ArgumentNullException>();
-          //}
+            //Assert (Testing of the action)
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+
+        // changing the lastname via the LastName property
+        // validation: lastname is required.
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("    ")]
+
+        public void Throw_Expection_When_Setting_LastName_To_Missing_Data(string changename)
+        {
+            //Arrange (Setup)
+            string firstname = "fardosa";
+            string lastname = "kito";
+            Residence address = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+            Person me = new Person(firstname, lastname, address, null);
+
+
+            //Act (execution) (testing will the property capture an invalid name change)
+            Action action = () => me.LastName = changename;
+
+            //Assert (Testing of the action)
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+
         #endregion
     }
 }
