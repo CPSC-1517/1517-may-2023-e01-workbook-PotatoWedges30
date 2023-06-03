@@ -20,7 +20,7 @@ namespace OOPsReview
                 {
                     //  throw new ArgumentNullException(nameof(firstname),"First name is requried");
                     //                              or
-                    throw new ArgumentNullException("First name is requried");
+                    throw new ArgumentNullException("first name is required");
                 }
                 _FirstName = value;
             }
@@ -33,11 +33,23 @@ namespace OOPsReview
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("Last name is requried");
+                    throw new ArgumentNullException("last name is required");
                 }
                 _LastName = value;
             }
         }
+
+        public string FullName 
+        {
+            //get { return _FirstName + " " + _LastName; }
+            get { return LastName + ", " + FirstName; }
+        }
+
+        public int NumberOfEmployments
+        {
+            get { return EmploymentPositions.Count(); }
+        }
+
         public Residence Address { get; set; }
         public List<Employment> EmploymentPositions { get; set; } = new List<Employment>();
 
@@ -55,6 +67,7 @@ namespace OOPsReview
             //    throw new ArgumentNullException("Last name is requried");
             //}
 
+           
             FirstName = firstname;
             LastName = lastname;
             Address = address;
@@ -77,6 +90,22 @@ namespace OOPsReview
 
             FirstName = "unknown";
             LastName = "unknown";
+        }
+
+        public void ChangeName(string firstname, string lastname)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+           
+        }
+
+        public void AddEmployment(Employment employment)
+        {
+            if (employment == null)
+            {
+                throw new ArgumentNullException("Employment record position is required.");
+            }
+            EmploymentPositions.Add(employment);
         }
     }
 }
