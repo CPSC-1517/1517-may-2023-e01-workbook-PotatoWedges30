@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OOPsReview
@@ -141,7 +142,8 @@ namespace OOPsReview
          */
         public DateTime StartDate { get; private set; }
 
-
+        //[JsonInclude]
+        //public string PublicDataMemberNotProperty;
         /** 
          * Constructors
          * 

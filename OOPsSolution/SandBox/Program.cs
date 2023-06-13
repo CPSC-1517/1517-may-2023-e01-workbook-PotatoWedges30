@@ -1,13 +1,97 @@
 ﻿
 using OOPsReview;
 using System;
+using System.Text.Json; //For Json Serialization name
 
 // driver code
 //RecordSamples()
 //RefactorSample()
+//FileIOCSV();
 
 
-FileIOCSV();
+//explore JSon files writing and reading
+//create a Person instance with name, address and employments
+//Person me = CreatePerson();
+//DisplayPerson(me);
+////file path C:\Temp\PersonData.json
+//string filepathname = @"C:\Temp\PersonData.json";
+//SaveAsJson(me, filepathname);
+//Person jsonMe = ReadAsJson(filepathname);
+//DisplayPerson(jsonMe);
+
+AccessorReview ar = new AccessorReview();
+Random rnd = new Random();
+for (int i = 0; i < 10; i++ )
+{
+    ar.Number1 = rnd.Next( 1, 11 );
+   // ar.Number2 = rnd.Next(1, 11);
+    ar.SetNumber2(rnd.Next(1, 11));
+    ar.Add = 0;
+
+    Console.WriteLine( $"Number1: {ar.Number1} Number2: {ar.Number2} Add: {ar.Add}" );
+}
+Person CreatePerson()
+{
+    Residence myHome = new Residence(123, "Maple St.", "Edmonton", "AB", "T6Y7U8");
+    List<Employment> employments = Read_Employment_Collection_From_CSV();
+    Person person = new Person("fardoa", "kito", myHome, employments);
+    return person;
+}
+
+void DisplayPerson(Person person)
+{
+    Console.WriteLine("\nPerson Date\n");
+    Console.WriteLine($"Name: {person.FullName}");
+    Console.WriteLine($"Residence: {person.Address.ToString()}");
+    Console.WriteLine("\nEmployments");
+    foreach(var item in person.EmploymentPositions)
+    {
+        Console.WriteLine($"\t{item.ToString()}");
+    }
+}
+
+
+void SaveAsJson(Person person, string filepathname)
+{
+    /**
+     * the term used to write Json files is Serialization
+     * the classes used are referred to as serializers
+     *with writing we can make the file produce more readble format
+     *   us
+     */
+    JsonSerializerOptions options = new JsonSerializerOptions
+    {
+        WriteIndented = true,
+        IncludeFields = true //this is for the public non property fields of a class
+    };
+
+
+    string jsonstring = JsonSerializer.Serialize<Person>(person, options);
+
+    File.WriteAllText(filepathname, jsonstring);
+
+}
+Person ReadAsJson(string filepathname)
+{
+    Person person = null;
+    try
+    {
+        //bring in the json text file
+        string jsonstring = File.ReadAllText(filepathname);
+
+        //use the deseralizer
+        // the expected structure <Person.
+        // it is IMPORTANT that the greedy constructor parameter names
+        // 
+        person = JsonSerializer.Deserialize<Person>(jsonstring);
+    } catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+
+    }
+    
+    return person;
+}
 void FileIOCSV()
 {
     //create a coolection of Employment instances to write out the data
